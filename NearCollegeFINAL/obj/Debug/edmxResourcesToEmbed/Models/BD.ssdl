@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NearCollegeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Tbl_Fichos">
+    <Key>
+      <PropertyRef Name="IdFicho" />
+    </Key>
+    <Property Name="IdFicho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaFicho" Type="date" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" />
+  </EntityType>
+  <EntityType Name="Tbl_Grados">
+    <Key>
+      <PropertyRef Name="IdGrado" />
+    </Key>
+    <Property Name="IdGrado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreGrado" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="JornadaGrado" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DisponibilidadCupoGrado" Type="varchar" MaxLength="13" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'NearCollege.dbo.Tbl_Grados_Fichos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Tbl_Grados_Fichos">
+          <Property Name="IdFicho" Type="int" />
+          <Property Name="IdGrado" Type="int" />
+        </EntityType>-->
+  <EntityType Name="Tbl_Roles">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreRol" Type="varchar" MaxLength="13" />
+  </EntityType>
+  <EntityType Name="Tbl_Usuarios">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreUsuario" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="ApellidoUsuario" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="CorreoUsuario" Type="varchar" MaxLength="55" Nullable="false" />
+    <Property Name="ContraseñaUsuario" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="IdRol" Type="int" />
+  </EntityType>
+  <Association Name="FK__Tbl_Ficho__IdUsu__29572725">
+    <End Role="Tbl_Usuarios" Type="Self.Tbl_Usuarios" Multiplicity="0..1" />
+    <End Role="Tbl_Fichos" Type="Self.Tbl_Fichos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Usuarios">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Tbl_Fichos">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'NearCollege.dbo.Tbl_Grados_Fichos', pero no se encuentra la tabla.
+        <Association Name="FK__Tbl_Grado__IdFic__2D27B809" />-->
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'NearCollege.dbo.Tbl_Grados_Fichos', pero no se encuentra la tabla.
+        <Association Name="FK__Tbl_Grado__IdGra__2E1BDC42" />-->
+  <Association Name="FK__Tbl_Usuar__IdRol__267ABA7A">
+    <End Role="Tbl_Roles" Type="Self.Tbl_Roles" Multiplicity="0..1" />
+    <End Role="Tbl_Usuarios" Type="Self.Tbl_Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Roles">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Tbl_Usuarios">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NearCollegeModelStoreContainer">
+    <EntitySet Name="Tbl_Fichos" EntityType="Self.Tbl_Fichos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Grados" EntityType="Self.Tbl_Grados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_Usuarios" EntityType="Self.Tbl_Usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Tbl_Ficho__IdUsu__29572725" Association="Self.FK__Tbl_Ficho__IdUsu__29572725">
+      <End Role="Tbl_Usuarios" EntitySet="Tbl_Usuarios" />
+      <End Role="Tbl_Fichos" EntitySet="Tbl_Fichos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tbl_Usuar__IdRol__267ABA7A" Association="Self.FK__Tbl_Usuar__IdRol__267ABA7A">
+      <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
+      <End Role="Tbl_Usuarios" EntitySet="Tbl_Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

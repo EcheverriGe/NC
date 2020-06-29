@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NearCollegeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Tbl_Fichos">
+    <Key>
+      <PropertyRef Name="IdFicho" />
+    </Key>
+    <Property Name="IdFicho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FechaFicho" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IdUsuario" Type="Int32" />
+    <NavigationProperty Name="Tbl_Usuarios" Relationship="Self.FK__Tbl_Ficho__IdUsu__29572725" FromRole="Tbl_Fichos" ToRole="Tbl_Usuarios" />
+  </EntityType>
+  <EntityType Name="Tbl_Grados">
+    <Key>
+      <PropertyRef Name="IdGrado" />
+    </Key>
+    <Property Name="IdGrado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreGrado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="JornadaGrado" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisponibilidadCupoGrado" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Roles">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreRol" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Usuarios" Relationship="Self.FK__Tbl_Usuar__IdRol__267ABA7A" FromRole="Tbl_Roles" ToRole="Tbl_Usuarios" />
+  </EntityType>
+  <EntityType Name="Tbl_Usuarios">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApellidoUsuario" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CorreoUsuario" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ContraseñaUsuario" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdRol" Type="Int32" />
+    <NavigationProperty Name="Tbl_Fichos" Relationship="Self.FK__Tbl_Ficho__IdUsu__29572725" FromRole="Tbl_Usuarios" ToRole="Tbl_Fichos" />
+    <NavigationProperty Name="Tbl_Roles" Relationship="Self.FK__Tbl_Usuar__IdRol__267ABA7A" FromRole="Tbl_Usuarios" ToRole="Tbl_Roles" />
+  </EntityType>
+  <Association Name="FK__Tbl_Ficho__IdUsu__29572725">
+    <End Role="Tbl_Usuarios" Type="Self.Tbl_Usuarios" Multiplicity="0..1" />
+    <End Role="Tbl_Fichos" Type="Self.Tbl_Fichos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Usuarios">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Tbl_Fichos">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tbl_Usuar__IdRol__267ABA7A">
+    <End Role="Tbl_Roles" Type="Self.Tbl_Roles" Multiplicity="0..1" />
+    <End Role="Tbl_Usuarios" Type="Self.Tbl_Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Roles">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Tbl_Usuarios">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NearCollegeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Tbl_Fichos" EntityType="Self.Tbl_Fichos" />
+    <EntitySet Name="Tbl_Grados" EntityType="Self.Tbl_Grados" />
+    <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" />
+    <EntitySet Name="Tbl_Usuarios" EntityType="Self.Tbl_Usuarios" />
+    <AssociationSet Name="FK__Tbl_Ficho__IdUsu__29572725" Association="Self.FK__Tbl_Ficho__IdUsu__29572725">
+      <End Role="Tbl_Usuarios" EntitySet="Tbl_Usuarios" />
+      <End Role="Tbl_Fichos" EntitySet="Tbl_Fichos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tbl_Usuar__IdRol__267ABA7A" Association="Self.FK__Tbl_Usuar__IdRol__267ABA7A">
+      <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
+      <End Role="Tbl_Usuarios" EntitySet="Tbl_Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
